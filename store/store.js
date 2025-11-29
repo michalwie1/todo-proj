@@ -1,4 +1,5 @@
 import { userService } from "../services/user.service.js"
+// import { todoService } from "../services/todo.service.js"
 
 const { createStore } = Redux
 
@@ -36,6 +37,7 @@ const initialState = {
     todos: [],
     isLoading: false,
     loggedinUser: userService.getLoggedinUser(),
+    // filterBy: todoService.getFilterFromSearchParams(searchParams)
     // isCartShown: false,
     // shoppingCart: []
 }

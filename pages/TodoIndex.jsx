@@ -15,6 +15,7 @@ export function TodoIndex() {
     // const [todos, setTodos] = useState(null)
     const todos = useSelector((state) => state.todos)
     const isLoading = useSelector((state) => state.isLoading)
+    // const filterBy = useSelector((state) => state.filterBy)
 
     const dispatch = useDispatch()
 
