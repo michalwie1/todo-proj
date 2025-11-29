@@ -14,6 +14,7 @@ export function TodoIndex() {
 
     // const [todos, setTodos] = useState(null)
     const todos = useSelector((state) => state.todos)
+    const isLoading = useSelector((state) => state.isLoading)
 
     const dispatch = useDispatch()
 
@@ -63,7 +64,10 @@ export function TodoIndex() {
                 <Link to="/todo/edit" className="btn" >Add Todo</Link>
             </div>
             <h2>Todos List</h2>
-            <TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
+            {isLoading 
+            ? <p>Loading...</p>
+            :<TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
+            }
             <hr />
             <h2>Todos Table</h2>
         </section>

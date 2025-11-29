@@ -3,7 +3,7 @@ import { ADD_TODO, REMOVE_TODO, SET_TODOS, SET_IS_LOADING, store, UPDATE_TODO } 
 
 
 export function loadTodos(filterBy) {
-    //  store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
         return todoService.query(filterBy)
             .then(todos => 
                 store.dispatch({ type: SET_TODOS, todos }))
@@ -11,9 +11,9 @@ export function loadTodos(filterBy) {
                 console.error('err:', err)
                 throw err
             })
-            // .finally(() => {
-            //     store.dispatch({ type: SET_IS_LOADING, isLoading: false })
-            // })
+            .finally(() => {
+                store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+            })
 }
 
 export function removeTodo(todoId) {
