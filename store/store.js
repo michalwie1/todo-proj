@@ -14,6 +14,7 @@ export const REMOVE_TODO = 'REMOVE_TODO'
 export const ADD_TODO = 'ADD_TODO'
 export const UPDATE_TODO = 'UPDATE_TODO'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const SET_COLOR = 'SET_COLOR'
 
 
 export const SET_FILTER_BY = 'SET_FILTER_BY'
@@ -84,6 +85,11 @@ function appReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 isLoading: cmd.isLoading
+            }
+        case SET_COLOR:
+            return {
+                ...state,
+                todos: state.todos.map(todo => (todo._id === cmd.todo._id) ? { ...todo, color: cmd.newColor } : todo)
             }
         case SET_USER:
             return {

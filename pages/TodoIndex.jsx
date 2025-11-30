@@ -6,13 +6,11 @@ import { TodoFilter } from "../cmps/TodoFilter.jsx"
 import { TodoList } from "../cmps/TodoList.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { loadTodos, removeTodo, saveTodo } from '../store/todo.action.js'
+import { loadTodos, removeTodo, saveTodo, changeColor } from '../store/todo.action.js'
 import { SET_TODOS } from '../store/store.js'
 
 
 export function TodoIndex() {
-
-    // const [todos, setTodos] = useState(null)
     const todos = useSelector((state) => state.todos)
     const isLoading = useSelector((state) => state.isLoading)
     // const filterBy = useSelector((state) => state.filterBy)
@@ -35,6 +33,8 @@ export function TodoIndex() {
     }, [filterBy])
 
     function onRemoveTodo(todoId) {
+        const isConfirm = confirm('Are you sure you want to remove this todo?')
+        if (!isConfirm) return
         removeTodo(todoId)
             .then(() => {
                 showSuccessMsg(`Todo removed`)
@@ -46,7 +46,7 @@ export function TodoIndex() {
 
     function onToggleTodo(todo) {
         const todoToSave = { ...todo, isDone: !todo.isDone }
-        todoService.save(todoToSave)
+        saveTodo(todoToSave)
             // .then((savedTodo) => {
             //     setTodos(prevTodos => prevTodos.map(currTodo => (currTodo._id !== todo._id) ? currTodo : { ...savedTodo }))
             //     showSuccessMsg(`Todo is ${(savedTodo.isDone) ? 'done' : 'back on your list'}`)
@@ -55,6 +55,10 @@ export function TodoIndex() {
                 console.log('err:', err)
                 showErrorMsg('Cannot toggle todo ' + todoId)
             })
+    }
+
+    function onChangeColor(todo, newColor) {
+        changeColor(todo, newColor)
     }
 
     if (!todos) return <div>Loading...</div>
@@ -67,7 +71,7 @@ export function TodoIndex() {
             <h2>Todos List</h2>
             {isLoading 
             ? <p>Loading...</p>
-            :<TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
+            :<TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} onChangeColor={onChangeColor} />
             }
             <hr />
             <h2>Todos Table</h2>

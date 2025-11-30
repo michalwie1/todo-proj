@@ -1,5 +1,5 @@
 import { todoService } from "../services/todo.service.js"
-import { ADD_TODO, REMOVE_TODO, SET_TODOS, SET_IS_LOADING, store, UPDATE_TODO } from "./store.js"
+import { ADD_TODO, REMOVE_TODO, SET_TODOS, SET_IS_LOADING, store, UPDATE_TODO, SET_COLOR } from "./store.js"
 
 
 export function loadTodos(filterBy) {
@@ -39,4 +39,13 @@ export function saveTodo(todoToSave) {
             console.log('Cannot remove todo', err)
             throw err
         })
+}
+
+export function changeColor(todo, newColor){
+    store.dispatch({ type: SET_COLOR, todo, newColor })
+    // setTodos(prev =>
+    //     prev.map(todo =>
+    //     todo._id === todoId ? { ...todo, color: newColor } : todo
+    //     )
+    // )
 }

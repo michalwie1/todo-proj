@@ -58,7 +58,7 @@ function save(todo) {
 }
 
 function getEmptyTodo(txt = '', importance = 5) {
-    return { txt, importance, isDone: false }
+    return { txt, importance, isDone: false, color: '#99a695' }
 }
 
 function getDefaultFilter() {
