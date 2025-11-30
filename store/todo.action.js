@@ -43,9 +43,4 @@ export function saveTodo(todoToSave) {
 
 export function changeColor(todo, newColor){
     store.dispatch({ type: SET_COLOR, todo, newColor })
-    // setTodos(prev =>
-    //     prev.map(todo =>
-    //     todo._id === todoId ? { ...todo, color: newColor } : todo
-    //     )
-    // )
 }

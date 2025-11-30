@@ -7,13 +7,13 @@ import { TodoList } from "../cmps/TodoList.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadTodos, removeTodo, saveTodo, changeColor } from '../store/todo.action.js'
-import { SET_TODOS } from '../store/store.js'
+import { SET_TODOS, SET_FILTER } from '../store/store.js'
 
 
 export function TodoIndex() {
     const todos = useSelector((state) => state.todos)
     const isLoading = useSelector((state) => state.isLoading)
-    // const filterBy = useSelector((state) => state.filterBy)
+    const filterBy = useSelector((state) => state.filterBy)
 
     const dispatch = useDispatch()
 
@@ -21,8 +21,13 @@ export function TodoIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
+    
 
-    const [filterBy, setFilterBy] = useState(defaultFilter)
+    // const [filterBy, setFilterBy] = useState(defaultFilter)
+
+    useEffect(() => {
+        dispatch({ type: SET_FILTER, filterBy: defaultFilter })
+    }, [])
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -31,6 +36,10 @@ export function TodoIndex() {
                 showErrorMsg('Cannot load todos')
             })
     }, [filterBy])
+
+    function onSetFilterBy(newFilter){
+        dispatch({ type: SET_FILTER, filterBy: newFilter })
+    }
 
     function onRemoveTodo(todoId) {
         const isConfirm = confirm('Are you sure you want to remove this todo?')
@@ -64,7 +73,7 @@ export function TodoIndex() {
     if (!todos) return <div>Loading...</div>
     return (
         <section className="todo-index">
-            <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
+            <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
             <div>
                 <Link to="/todo/edit" className="btn" >Add Todo</Link>
             </div>

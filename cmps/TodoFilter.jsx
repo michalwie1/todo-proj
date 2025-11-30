@@ -48,6 +48,13 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
                     type="number" placeholder="By Importance" id="importance" name="importance"
                 />
 
+                <label for="todo-status">Status: </label>
+                    <select name="status" id="todo-status" onChange={handleChange}>
+                        <option value="all">All</option>
+                        <option value="active">Active</option>
+                        <option value="done">Done</option>
+                    </select>
+
                 <button hidden>Set Filter</button>
             </form>
         </section>

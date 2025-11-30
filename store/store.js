@@ -15,7 +15,7 @@ export const ADD_TODO = 'ADD_TODO'
 export const UPDATE_TODO = 'UPDATE_TODO'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const SET_COLOR = 'SET_COLOR'
-
+export const SET_FILTER = 'SET_FILTER'
 
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 export const REMOVE_TODO_UNDO = 'REMOVE_TODO_UNDO'
@@ -38,7 +38,7 @@ const initialState = {
     todos: [],
     isLoading: false,
     loggedinUser: userService.getLoggedinUser(),
-    // filterBy: todoService.getFilterFromSearchParams(searchParams)
+    filterBy: {}
     // isCartShown: false,
     // shoppingCart: []
 }
@@ -90,6 +90,11 @@ function appReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 todos: state.todos.map(todo => (todo._id === cmd.todo._id) ? { ...todo, color: cmd.newColor } : todo)
+            }
+        case SET_FILTER:
+            return {
+                ...state,
+                filterBy: cmd.filterBy
             }
         case SET_USER:
             return {
